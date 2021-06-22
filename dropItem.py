@@ -2,13 +2,21 @@ import pygame
 import random
 import pygame as pg
 class DropItem:
-	def __init__(self,x,y):
+	def __init__(self,logic,x,y):
+		self.logic=logic
 		self.posi=[x,y]
 		self.contSpriteIdle=25
 		self.alt=100
 		self.larg=100
 		self.imageIdle = self.carregarSpriteSheet('images/dropitem.png',self.contSpriteIdle,32,32)
 		self.rectSprite=pygame.Rect(self.posi[0],self.posi[1],self.larg,self.alt)
+		self.imageIdleReflexo =[]
+
+		for i in self.imageIdle:
+			aux2=pygame.transform.flip(i, False, True)
+			aux2.set_alpha(50) 
+			aux2=pygame.transform.scale(aux2, (self.larg,int(self.alt/self.logic.reflexoAlt) ))
+			self.imageIdleReflexo.append(aux2)
 
 		self.controle='d'
 		self.dir=0
@@ -80,5 +88,5 @@ class DropItem:
 		self.contfp+=1
 	def render(self,screen):
 		if(self.idSprite==0):
-			
+			self.renderiza(self.imageIdleReflexo,self.contSprite,screen,condicao=[[-35,5],[0,0]])
 			self.renderiza(self.imageIdle,self.contSprite,screen,condicao=[[-35,-90],[0,0]])
