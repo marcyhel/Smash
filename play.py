@@ -2,7 +2,7 @@ import pygame
 import random
 import pygame as pg
 class Player:
-	def __init__(self,x,y):
+	def __init__(self,x,y,controle=""):
 		self.posi=[x,y]
 		self.altColi=30
 		self.largColi=50
@@ -21,8 +21,8 @@ class Player:
 		self.idSprite=0
 		self.contSprite=random.randint(0,5)
 		self.contfp=0
-
-		self.velocidade=1
+		self.controle=controle
+		self.velocidade=2.5
 		self.left=False
 		self.rigth=False
 		self.bottom=False
@@ -65,19 +65,19 @@ class Player:
 			
 		self.contfp+=1
 	def frameRate(self):
-		if(random.random()<=0.01):
-			self.left=True
-		if(random.random()<=0.01):
-			self.rigth=True
-		if(random.random()<=0.01):
-			self.bottom=True
-		if(random.random()<=0.01):
-			self.top=True
-		if(random.random()<=0.05):
-			self.left=False
-			self.rigth=False
-			self.top=False
-			self.bottom=False
+		#if(random.random()<=0.01):
+		#	self.left=True
+		#if(random.random()<=0.01):
+		#	self.rigth=True
+		#if(random.random()<=0.01):
+		#	self.bottom=True
+		#if(random.random()<=0.01):
+		#	self.top=True
+		#if(random.random()<=0.05):
+		#	self.left=False
+		#	self.rigth=False
+		#	self.top=False
+		#	self.bottom=False
 
 		self.contSprite+=1
 		if(self.idSprite==0):
@@ -106,9 +106,24 @@ class Player:
 			if(self.dir==1):
 				aux=pygame.transform.flip(aux2, True, False)
 				screen.blit(aux, (self.rectSprite.left+condicao[0][0],self.rectSprite.top+condicao[0][1]))
+
+	
 	def render(self,screen):
-		#pygame.draw.rect(screen,(150,50,50), self.coli)
+		pygame.draw.rect(screen,(150,50,50), self.coli)
 		#pygame.draw.rect(screen,(50,50,50), self.rectSprite)
+		
+
+		
+		
+		red = (0, 0, 0,0)
+		size = (23, 187, 100, 20)
+		surface = pygame.Surface((50, 25),pygame.SRCALPHA)
+		surface.set_alpha(150) 
+		surface.fill((20,20,20))
+		surface.set_colorkey((150,150,150))
+		ellipse=pygame.draw.ellipse(surface, red, size)
+		screen.blit(surface, (self.posi[0], self.posi[1]+20))
 		if(self.idSprite==0):
 			
 			self.renderiza(self.imageIdle,self.contSprite,screen,condicao=[[-35,-90],[0,0]])
+
