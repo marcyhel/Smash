@@ -8,15 +8,33 @@ import time
 import copy 	
 from play import *
 from dropItem import *
+from tile import *
+from pilar import *
 
 class Logica:
 	def __init__(self):
 		self.reflexoAlt=2
-		self.play=[Player(self,200,200,controle="arrow"),Player(self,250,200,controle="wasd"),DropItem(self,300,300)]
+		self.chao=[]
+		self.play=[Player(self,200,200,controle="arrow"),Player(self,250,200,controle="wasd"),DropItem(self,300,300),Pilar(self,325,297),Pilar(self,100,400)]
 		for i in range(2):
 			self.play.append(Player(self,random.randint(10,580),random.randint(10,580)))
 
+
+		x=150
+		y=250
+
+		for i in range(2):
+			#self.chao.append(Tile(self,110*(i+1),100+i))
+			for j in range(4):
+				if(j%2==0):
+					self.chao.append(Tile(self,x+115*(i+1),y+28*(j+1)+i))
+				else:
+					
+					self.chao.append(Tile(self,x+60+115*(i+1),y+28*(j+1)+i))
+
 	def render(self,screen):
+		for i in self.chao:
+			i.render(screen)
 		for i in self.play:
 			i.render(screen)
 
@@ -27,7 +45,15 @@ class Logica:
 					aux=self.play[i]
 					self.play[i]=self.play[j]
 					self.play[j]=aux
+		for i in range(len(self.chao)):
+			for j in range(len(self.chao)):
+				if(self.chao[i].rectSprite.bottom<self.chao[j].rectSprite.bottom):
+					aux=self.chao[i]
+					self.chao[i]=self.chao[j]
+					self.chao[j]=aux
 		for i in self.play:
+			i.update()
+		for i in self.chao:
 			i.update()
 
 logica=Logica()

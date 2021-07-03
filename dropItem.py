@@ -1,8 +1,11 @@
 import pygame
 import random
 import pygame as pg
-class DropItem:
+from entidade import*
+
+class DropItem(Entidade):
 	def __init__(self,logic,x,y):
+		super().__init__(logic,x,y,50,50,100,100)
 		self.logic=logic
 		self.posi=[x,y]
 		self.contSpriteIdle=25
@@ -15,6 +18,7 @@ class DropItem:
 		for i in self.imageIdle:
 			aux2=pygame.transform.flip(i, False, True)
 			aux2.set_alpha(50) 
+			aux2=self.changColor(aux2,(25,2,25))
 			aux2=pygame.transform.scale(aux2, (self.larg,int(self.alt/self.logic.reflexoAlt) ))
 			self.imageIdleReflexo.append(aux2)
 

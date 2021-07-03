@@ -4,7 +4,7 @@ import pygame as pg
 from entidade import*
 class Player(Entidade):
 	def __init__(self,logic,x,y,controle=""):
-		super().__init__(logic,x,y,30,50,150,120)
+		super().__init__(logic,x,y,30,40,150,120)
 		self.contSpriteIdle=7
 		self.imageIdle = self.carregarSpriteSheet('images/gothicvania patreon collection/Ghost-Files/PNG/ghost-idle.png',self.contSpriteIdle,64,80)
 		self.imageIdleReflexo =[]
@@ -18,6 +18,7 @@ class Player(Entidade):
 		for i in self.imageIdle:
 			aux2=pygame.transform.flip(i, False, True)
 			aux2.set_alpha(50) 
+			aux2=self.changColor(aux2,(25,2,25))
 			aux2=pygame.transform.scale(aux2, (self.larg,int(self.alt/self.logic.reflexoAlt) ))
 			self.imageIdleReflexo.append(aux2)
 
@@ -59,8 +60,8 @@ class Player(Entidade):
 		self.move()
 		self.coli=pygame.Rect(self.posi[0],self.posi[1],self.largColi,self.altColi)
 
-		self.rectSprite=pygame.Rect(self.posi[0],self.posi[1],self.larg,self.alt)
-		self.rectSpriteReflexo=pygame.Rect(self.posi[0],self.posi[1],self.larg,self.alt/2)
+		self.rectSprite=pygame.Rect(self.posi[0],self.posi[1]-20,self.larg,self.alt)
+		self.rectSpriteReflexo=pygame.Rect(self.posi[0],self.posi[1]-20,self.larg,self.alt/2)
 		if(self.contfp>=7):
 
 			self.frameRate()
@@ -110,6 +111,6 @@ class Player(Entidade):
 		if(self.dire==7):
 			screen.blit(pygame.transform.flip(self.imageDireBottonRight, True, True), (self.rectSprite.left-mo,self.rectSprite.top))
 		if(self.idSprite==0):
-			self.renderiza(self.imageIdleReflexo,self.contSprite,screen,self.rectSprite,condicao=[[-35,20],[0,0]])
-			self.renderiza(self.imageIdle,self.contSprite,screen,self.rectSprite,condicao=[[-35,-90],[0,0]])
+			self.renderiza(self.imageIdleReflexo,self.contSprite,screen,self.rectSprite,condicao=[[-40,20],[0,0]])
+			self.renderiza(self.imageIdle,self.contSprite,screen,self.rectSprite,condicao=[[-40,-90],[0,0]])
 
